@@ -5,304 +5,435 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hub Educativo Interactivo</title>
   
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   
+  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   
+  <!-- Google Fonts: Importación de "Anton" y "Poppins" -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
   
   <style>
-        /* Tipografía base para todo el sitio (Cuerpo, botones, formularios) */
+        /* Tipografía base para todo el sitio */
         body, button, input, textarea, select, .nav-pill { 
             font-family: 'Poppins', sans-serif !important; 
         }
         
-        /* Tipografía exclusiva para Títulos y elementos destacados */
+        /* Tipografía para Títulos */
         h1, h2, h3, h4, h5, h6, .font-display { 
             font-family: 'Anton', sans-serif !important;
-            letter-spacing: 0.03em; /* Ajuste ligero para mejorar la estética de Anton en títulos */
+            letter-spacing: 0.03em;
+            -webkit-font-smoothing: antialiased;
         }
         
-        .nav-pill { transition: all 0.3s; }
-        .nav-pill.active { transform: scale(1.05); }
-        .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-        .faq-content.open { max-height: 500px; }
-        .section-card { transition: transform 0.2s, box-shadow 0.2s; }
-        .section-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+        /* Botones unificados de la barra de navegación */
+        .nav-pill-custom {
+            background-color: #ffffff !important;
+            color: #0b004f !important;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .nav-pill-custom:hover {
+            background-color: #f1f5f9 !important;
+            transform: scale(1.02);
+        }
+        
+        /* Ocultar barra de scroll pero mantener funcionalidad */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .section-card { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease; }
+        .section-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(11, 0, 79, 0.08); }
         html { scroll-behavior: smooth; }
   </style>
 </head>
-<body class="w-full min-h-screen" style="background: rgb(248, 250, 252);">
+<body class="w-full min-h-screen text-slate-800" style="background: rgb(248, 250, 252);">
 
+  <!-- Navigation -->
   <nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/90 border-b border-gray-100">
-   <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-2 overflow-x-auto">
-     <a href="#inicio" class="nav-pill px-4 py-2 rounded-full text-sm font-medium text-white bg-blue-600 whitespace-nowrap">Inicio</a> 
-     <a href="#empieza" class="nav-pill px-4 py-2 rounded-full text-sm font-medium text-gray-700 border border-gray-200 bg-white whitespace-nowrap">Empieza Aquí</a> 
-     <a href="#aprende" class="nav-pill px-4 py-2 rounded-full text-sm font-medium text-white bg-sky-400 whitespace-nowrap">Aprende a Diseñar</a> 
-     <a href="#pasos" class="nav-pill px-4 py-2 rounded-full text-sm font-medium text-white bg-purple-800 whitespace-nowrap">Paso a Paso</a> 
-     <a href="#dudas" class="nav-pill px-4 py-2 rounded-full text-sm font-medium text-gray-700 border border-gray-200 bg-white whitespace-nowrap">Dudas Comunes</a> 
-     <a href="#feedback" class="nav-pill px-4 py-2 rounded-full text-sm font-medium text-white bg-blue-600 whitespace-nowrap">Ayúdanos</a> 
-     <a href="#tips" class="nav-pill px-4 py-2 rounded-full text-sm font-medium text-gray-700 border border-gray-200 bg-white whitespace-nowrap">Tips</a>
+   <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+     
+     <!-- Brand Logos (Isotipo + Logotipo) -->
+     <div class="flex items-center gap-3 shrink-0">
+       <img src="isotipo.png" alt="Isotipo" class="h-8 w-auto object-contain">
+       <img src="logotipo.png" alt="Logotipo" class="h-5 w-auto object-contain">
+     </div>
+     
+     <!-- Menu Links (Scrollable horizontalmente si es necesario) -->
+     <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+       <a href="#inicio" class="nav-pill-custom px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap">Inicio</a> 
+       <a href="#empieza" class="nav-pill-custom px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap">Empieza Aquí</a> 
+       <a href="#aprende" class="nav-pill-custom px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap">Aprende a Diseñar</a> 
+       <a href="#paso-a-paso" class="nav-pill-custom px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap">Paso a Paso</a> 
+       <a href="#faq" class="nav-pill-custom px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap">Dudas Comunes</a> 
+       <a href="#feedback" class="nav-pill-custom px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap">Ayúdanos</a> 
+       <a href="#tips" class="nav-pill-custom px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap">Tips</a>
+     </div>
+     
    </div>
   </nav>
 
+  <!-- Section 1: INICIO -->
   <section id="inicio" class="pt-14">
-   <div class="relative w-full overflow-hidden h-[80vh]">
-    <img class="absolute inset-0 w-full h-full object-cover" loading="lazy" src="https://images.pexels.com/photos/6893348/pexels-photo-6893348.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1920" alt="Flat lay of a closed laptop, notebook, and tablet on neutral surface">
-    <div class="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-purple-900/60"></div>
-    <div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
-     <h1 class="font-display text-white mb-4" style="font-size: 46px;">Diseña Recursos Educativos con Impacto</h1>
-     <p class="text-white/90 max-w-2xl mb-8 font-normal" style="font-size: 20px;">Tu guía interactiva paso a paso para transformar conocimiento en experiencias de aprendizaje memorables.</p>
-     <a href="#empieza" class="px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all font-medium" style="background: rgb(59, 130, 246); color: rgb(255, 255, 255);">Comienza Ahora →</a>
+   <div class="relative w-full overflow-hidden h-[85vh] flex items-center justify-center">
+    <!-- Imagen de fondo -->
+    <img class="absolute inset-0 w-full h-full object-cover" loading="lazy" src="banner-biblioteca.png" alt="Laptop, monitor con Canva y tablet con Genially en una biblioteca moderna">
+    
+    <!-- DEGRADADO PERSONALIZADO -->
+    <div class="absolute inset-0" style="background: linear-gradient(135deg, #0b004f 0%, #5b399f 100%); opacity: 0.82;"></div>
+    
+    <!-- Contenido del Banner -->
+    <div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-6 max-w-4xl">
+     <h1 class="font-display text-white mb-6 drop-shadow-lg leading-tight" style="font-size: 52px;">Diseña tus Recursos con el Learning Playbook</h1>
+     <p class="text-white/90 max-w-2xl mb-10 font-normal drop-shadow-md leading-relaxed" style="font-size: 20px;">Una guía interactiva paso a paso para transformar tu conocimiento en experiencias educativas memorables.</p>
+     <a href="#empieza" class="px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 font-medium tracking-wide transform hover:-translate-y-0.5 active:translate-y-0" style="background: rgb(59, 130, 246); color: rgb(255, 255, 255);">Comienza Ahora →</a>
     </div>
    </div>
   </section>
 
+  <!-- Section 2: EMPIEZA AQUÍ -->
   <section id="empieza" class="py-24 px-6">
    <div class="max-w-6xl mx-auto">
-    <h2 class="font-display text-center mb-4" style="color: rgb(30, 27, 75); font-size: 36px;">Empieza Aquí</h2>
-    <p class="text-center max-w-2xl mx-auto mb-16 text-base" style="color: rgb(75, 85, 99);">Sigue estos 5 pasos para orientarte dentro de la plataforma y sacarle el máximo provecho.</p>
-    <div class="grid md:grid-cols-5 gap-6">
-     <div class="section-card rounded-2xl p-6 text-center" style="background: rgb(255, 255, 255);">
-      <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mx-auto mb-4 text-xl font-semibold">1</div>
-      <h3 class="mb-2" style="color: rgb(30, 58, 95); font-size: 19px;">¿Qué es el LP?</h3>
-      <p class="text-sm" style="color: rgb(107, 114, 128);">Conoce el proyecto y su propósito educativo.</p>
-     </div>
-     <div class="section-card rounded-2xl p-6 text-center" style="background: rgb(255, 255, 255);">
-      <div class="w-12 h-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center mx-auto mb-4 text-xl font-semibold">2</div>
-      <h3 class="mb-2" style="color: rgb(30, 58, 95); font-size: 19px;">¿Para quién es?</h3>
-      <p class="text-sm" style="color: rgb(107, 114, 128);">Identifica si este recurso es para ti.</p>
-     </div>
-     <div class="section-card rounded-2xl p-6 text-center" style="background: rgb(255, 255, 255);">
-      <div class="w-12 h-12 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center mx-auto mb-4 text-xl font-semibold">3</div>
-      <h3 class="mb-2" style="color: rgb(30, 58, 95); font-size: 19px;">¿Cómo usarlo?</h3>
-      <p class="text-sm" style="color: rgb(107, 114, 128);">Instrucciones claras de navegación.</p>
-     </div>
-     <div class="section-card rounded-2xl p-6 text-center" style="background: rgb(255, 255, 255);">
-      <div class="w-12 h-12 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center mx-auto mb-4 text-xl font-semibold">4</div>
-      <h3 class="mb-2" style="color: rgb(30, 58, 95); font-size: 19px;">¿Qué lograrás?</h3>
-      <p class="text-sm" style="color: rgb(107, 114, 128);">Beneficios y transformación esperada.</p>
-     </div>
-     <div class="section-card rounded-2xl p-6 text-center" style="background: rgb(255, 255, 255);">
-      <div class="w-12 h-12 rounded-full bg-violet-100 text-violet-600 flex items-center justify-center mx-auto mb-4 text-xl font-semibold">5</div>
-      <h3 class="mb-2" style="color: rgb(30, 58, 95); font-size: 19px;">Tutorial</h3>
-      <p class="text-sm" style="color: rgb(107, 114, 128);">Video interactivo de orientación.</p>
-     </div>
+    <h2 class="font-display text-center mb-4" style="color: #0b004f; font-size: 40px;">Empieza Aquí</h2>
+    <p class="text-center max-w-2xl mx-auto mb-16 text-base text-slate-600">Descubre todo lo que vas a encontrar en el Learning Playbook y cómo sacarle el máximo provecho.</p>
+    
+    <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20 items-start">
+     
+     <!-- Tarjeta 1 - ¿Qué es el Playbook? -->
+     <details name="pasos" class="group rounded-2xl p-6 transition-all duration-300 shadow-sm open:shadow-md cursor-pointer border border-blue-100/50" style="background-color: #e0eaff;">
+      <summary class="list-none focus:outline-none select-none">
+       <div class="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center mx-auto mb-4 text-xl font-semibold shadow-sm transition-transform duration-300 group-hover:scale-105">1</div>
+       <h3 class="font-display text-center flex items-center justify-center gap-2" style="color: #0b004f; font-size: 19px;">
+        ¿Qué es?
+        <span class="text-xs transition-transform duration-300 group-open:rotate-180" style="color: #0b004f;">▼</span>
+       </h3>
+       <p class="text-sm text-center mt-2 text-slate-500 group-open:hidden">Conoce el proyecto y su propósito educativo.</p>
+      </summary>
+      <div class="mt-4 pt-4 border-t border-blue-200/50 text-left text-sm leading-relaxed" style="color: #0b004f;">
+       <p>Es una guía práctica e interactiva para la creación de recursos de aprendizaje. No es un manual teórico; es una ruta precisa y fácil de aplicar, con la que podrás diseñar los recursos para tus próximas formaciones.</p>
+      </div>
+     </details>
+     
+     <!-- Tarjeta 2 - ¿Para quién es este Playbook? -->
+     <details name="pasos" class="group rounded-2xl p-6 transition-all duration-300 shadow-sm open:shadow-md cursor-pointer border border-purple-100/50" style="background-color: #ebd5ff;">
+      <summary class="list-none focus:outline-none select-none">
+       <div class="w-12 h-12 rounded-full bg-purple-600 text-white flex items-center justify-center mx-auto mb-4 text-xl font-semibold shadow-sm transition-transform duration-300 group-hover:scale-105">2</div>
+       <h3 class="font-display text-center flex items-center justify-center gap-2" style="color: #0b004f; font-size: 19px;">
+        ¿Para quién es?
+        <span class="text-xs transition-transform duration-300 group-open:rotate-180" style="color: #0b004f;">▼</span>
+       </h3>
+       <p class="text-sm text-center mt-2 text-slate-500 group-open:hidden">Identifica si este recurso es para ti.</p>
+      </summary>
+      <div class="mt-4 pt-4 border-t border-purple-200/50 text-left text-sm leading-relaxed" style="color: #0b004f;">
+       <p>Está diseñado para expertos técnicos como tú, que compartes tu conocimiento a través de formaciones y necesitas una metodología clara, rápida y efectiva para diseñar materiales educativos basados en ese valioso conocimiento.</p>
+      </div>
+     </details>
+     
+     <!-- Tarjeta 3 - ¿Cómo usarlo? -->
+     <details name="pasos" class="group rounded-2xl p-6 transition-all duration-300 shadow-sm open:shadow-md cursor-pointer border border-sky-100/50" style="background-color: #daf4ff;">
+      <summary class="list-none focus:outline-none select-none">
+       <div class="w-12 h-12 rounded-full bg-sky-500 text-white flex items-center justify-center mx-auto mb-4 text-xl font-semibold shadow-sm transition-transform duration-300 group-hover:scale-105">3</div>
+       <h3 class="font-display text-center flex items-center justify-center gap-2" style="color: #0b004f; font-size: 19px;">
+        ¿Cómo usarlo?
+        <span class="text-xs transition-transform duration-300 group-open:rotate-180" style="color: #0b004f;">▼</span>
+       </h3>
+       <p class="text-sm text-center mt-2 text-slate-500 group-open:hidden">Instrucciones claras de navegación.</p>
+      </summary>
+      <div class="mt-4 pt-4 border-t border-sky-200/50 text-left text-sm leading-relaxed" style="color: #0b004f;">
+       <ul class="space-y-2 list-disc list-inside">
+        <li>Si es tu primera vez, léelo de principio a fin para conocer todo el proceso.</li>
+        <li>Consulta cada vez que tengas dudas cuando vayas a crear un recurso nuevo.</li>
+        <li>Descarga las plantillas para diseñar tu contenido o tus recursos.</li>
+        <li>Busca el tutorial que necesites para acceder a las distintas herramientas y plataformas.</li>
+       </ul>
+      </div>
+     </details>
+     
+     <!-- Tarjeta 4 - ¿Qué lograrás? -->
+     <details name="pasos" class="group rounded-2xl p-6 transition-all duration-300 shadow-sm open:shadow-md cursor-pointer border border-indigo-100/50" style="background-color: #e2e0ff;">
+      <summary class="list-none focus:outline-none select-none">
+       <div class="w-12 h-12 rounded-full bg-indigo-600 text-white flex items-center justify-center mx-auto mb-4 text-xl font-semibold shadow-sm transition-transform duration-300 group-hover:scale-105">4</div>
+       <h3 class="font-display text-center flex items-center justify-center gap-2" style="color: #0b004f; font-size: 19px;">
+        ¿Qué lograrás?
+        <span class="text-xs transition-transform duration-300 group-open:rotate-180" style="color: #0b004f;">▼</span>
+       </h3>
+       <p class="text-sm text-center mt-2 text-slate-500 group-open:hidden">Beneficios y transformación esperada.</p>
+      </summary>
+      <div class="mt-4 pt-4 border-t border-indigo-200/50 text-left text-sm leading-relaxed" style="color: #0b004f;">
+       <p class="mb-3 font-medium">Después de estructurar tu curso con el equipo de formación, este Playbook te ayudará a diseñar tus propios recursos a través de 4 pasos claves:</p>
+       <ul class="space-y-1 list-decimal list-inside pl-1 mb-3">
+        <li>Dividir tu conocimiento en pequeñas cápsulas.</li>
+        <li>Elegir el formato correcto para compartir lo que sabes.</li>
+        <li>Seleccionar plantillas para ahorrar tiempo.</li>
+        <li>Diseñar tus recursos de forma fácil y con una guía.</li>
+       </ul>
+       <p class="font-semibold text-center mt-2 pt-2 border-t border-indigo-200/30">¡Y por supuesto, compartir tus recursos listos!</p>
+      </div>
+     </details>
+
     </div>
+
+    <!-- SECCIÓN DEL VIDEO TUTORIAL -->
+    <div class="max-w-3xl mx-auto">
+      <div class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border border-gray-100 transform transition-transform duration-500 hover:scale-[1.01]">
+        <iframe 
+          class="absolute inset-0 w-full h-full"
+          src="https://www.youtube.com/embed/LTXfew_WVpM?si=MQtw_ttF3HTf8iYC" 
+          title="YouTube video player" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          referrerpolicy="strict-origin-when-cross-origin" 
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+
    </div>
   </section>
 
-  <section id="aprende" class="py-24 px-6" style="background: rgb(240, 249, 255);">
+  <!-- Section 3: MINICURSO / APRENDE A DISEÑAR -->
+  <section id="aprende" class="py-24 px-6 transition-all" style="background-color: #daf4ff;">
    <div class="max-w-6xl mx-auto">
-    <h2 class="font-display text-center mb-4" style="color: rgb(30, 27, 75); font-size: 36px;">Aprende a Diseñar tus Recursos</h2>
-    <p class="text-center max-w-2xl mx-auto mb-16 text-base" style="color: rgb(75, 85, 99);">Explora las herramientas, plantillas y principios para crear materiales educativos profesionales.</p>
-    <div class="grid md:grid-cols-2 gap-8 mb-12">
-     <div class="flex gap-4">
-       <img class="w-full h-64 object-cover rounded-2xl" loading="lazy" src="https://images.pexels.com/photos/4238489/pexels-photo-4238489.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="A person sketching colorful digital art on a tablet using a stylus">
+    <h2 class="font-display text-center mb-4" style="color: #0b004f; font-size: 40px;">Aprende a diseñar tus recursos educativos</h2>
+    <p class="text-center max-w-2xl mx-auto mb-16 text-base text-slate-600">Selecciona un módulo para acceder a las herramientas, metodologías y guías de diseño interactivo.</p>
+    
+    <div class="space-y-6">
+     
+     <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+      
+      <a href="#modulo-1" class="group block bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+       <div class="aspect-video w-full overflow-hidden bg-slate-900 relative">
+        <img class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" src="modulo 1.jpg" alt="Antes de empezar">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+       </div>
+       <div class="p-6 text-center">
+        <h3 class="font-medium transition-colors duration-300 group-hover:text-blue-600" style="color: #0b004f; font-size: 18px;">Antes de empezar</h3>
+       </div>
+      </a>
+      
+      <a href="#modulo-2" class="group block bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+       <div class="aspect-video w-full overflow-hidden bg-slate-900 relative">
+        <img class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" src="modulo 2.jpg" alt="Transforma tu conocimiento en recursos">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+       </div>
+       <div class="p-6 text-center">
+        <h3 class="font-medium transition-colors duration-300 group-hover:text-purple-600" style="color: #0b004f; font-size: 18px;">Transforma tu conocimiento en recursos</h3>
+       </div>
+      </a>
+      
+      <a href="#modulo-3" class="group block bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+       <div class="aspect-video w-full overflow-hidden bg-slate-900 relative">
+        <img class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" src="modulo 3.jpg" alt="Diseña tu recurso">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+       </div>
+       <div class="p-6 text-center">
+        <h3 class="font-medium transition-colors duration-300 group-hover:text-sky-600" style="color: #0b004f; font-size: 18px;">Diseña tu recurso</h3>
+       </div>
+      </a>
+      
      </div>
-     <div class="space-y-6">
-      <div class="section-card rounded-xl p-5" style="background: rgb(255, 255, 255);">
-       <h4 class="mb-1" style="color: rgb(30, 58, 95); font-size: 16px;">Antes de Empezar</h4>
-       <p class="text-sm" style="color: rgb(107, 114, 128);">Explicación de la estructura y ejemplo del programa UEP.</p>
-      </div>
-      <div class="section-card rounded-xl p-5" style="background: rgb(255, 255, 255);">
-       <h4 class="mb-1" style="color: rgb(30, 58, 95); font-size: 16px;">Transforma tu Conocimiento</h4>
-       <p class="text-sm" style="color: rgb(107, 114, 128);">Tipos de recursos, divide tu contenido y escoge tu herramienta ideal.</p>
-      </div>
-      <div class="section-card rounded-xl p-5" style="background: rgb(255, 255, 255);">
-       <h4 class="mb-1" style="color: rgb(30, 58, 95); font-size: 16px;">Diseña tu Recurso</h4>
-       <p class="text-sm" style="color: rgb(107, 114, 128);">Storyboarding con plantilla y principios de buen diseño.</p>
-      </div>
+     
+     <div class="grid sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
+      
+      <a href="#modulo-4" class="group block bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+       <div class="aspect-video w-full overflow-hidden bg-slate-900 relative">
+        <img class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" src="modulo 4.jpg" alt="Tutoriales">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+       </div>
+       <div class="p-6 text-center">
+        <h3 class="font-medium transition-colors duration-300 group-hover:text-indigo-600" style="color: #0b004f; font-size: 18px;">Tutoriales</h3>
+       </div>
+      </a>
+      
+      <a href="#modulo-5" class="group block bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+       <div class="aspect-video w-full overflow-hidden bg-slate-900 relative">
+        <img class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" src="modulo 5.jpg" alt="Kit de plantillas">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+       </div>
+       <div class="p-6 text-center">
+        <h3 class="font-medium transition-colors duration-300 group-hover:text-emerald-600" style="color: #0b004f; font-size: 18px;">Kit de plantillas</h3>
+       </div>
+      </a>
+      
      </div>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-6 mb-12">
-     <div class="section-card rounded-xl p-6 text-center" style="background: rgb(255, 255, 255);">
-      <i data-lucide="layout-template" class="w-8 h-8 mx-auto mb-3 text-sky-500"></i>
-      <h4 class="mb-2" style="color: rgb(30, 58, 95); font-size: 16px;">Plantillas de Contenido</h4>
-      <p class="text-sm" style="color: rgb(107, 114, 128);">Para dividir y organizar tu contenido educativo.</p>
-     </div>
-     <div class="section-card rounded-xl p-6 text-center" style="background: rgb(255, 255, 255);">
-      <i data-lucide="pencil-ruler" class="w-8 h-8 mx-auto mb-3 text-purple-500"></i>
-      <h4 class="mb-2" style="color: rgb(30, 58, 95); font-size: 16px;">Plantilla de Diseño</h4>
-      <p class="text-sm" style="color: rgb(107, 114, 128);">Diseña tu recurso con guía visual paso a paso.</p>
-     </div>
-     <div class="section-card rounded-xl p-6 text-center" style="background: rgb(255, 255, 255);">
-      <i data-lucide="check-square" class="w-8 h-8 mx-auto mb-3 text-blue-500"></i>
-      <h4 class="mb-2" style="color: rgb(30, 58, 95); font-size: 16px;">Checklist de Revisión</h4>
-      <p class="text-sm" style="color: rgb(107, 114, 128);">Verifica que tu recurso cumple con los estándares.</p>
-     </div>
-    </div>
-
-    <h3 class="text-center mb-8" style="color: rgb(30, 27, 75); font-size: 24px;">Micro-Tutoriales</h3>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-     <div class="section-card rounded-lg p-4 text-center" style="background: rgb(255, 255, 255);">
-      <i data-lucide="wrench" class="w-6 h-6 mx-auto mb-2 text-blue-500"></i>
-      <p class="text-sm font-medium" style="color: rgb(55, 65, 81);">Herramientas Básicas</p>
-     </div>
-     <div class="section-card rounded-lg p-4 text-center" style="background: rgb(255, 255, 255);">
-      <i data-lucide="book-open" class="w-6 h-6 mx-auto mb-2 text-purple-500"></i>
-      <p class="text-sm font-medium" style="color: rgb(55, 65, 81);">Recursos &amp; Bancos</p>
-     </div>
-     <div class="section-card rounded-lg p-4 text-center" style="background: rgb(255, 255, 255);">
-      <i data-lucide="map" class="w-6 h-6 mx-auto mb-2 text-sky-500"></i>
-      <p class="text-sm font-medium" style="color: rgb(55, 65, 81);">Diseño de Mapas</p>
-     </div>
-     <div class="section-card rounded-lg p-4 text-center" style="background: rgb(255, 255, 255);">
-      <i data-lucide="sparkles" class="w-6 h-6 mx-auto mb-2 text-indigo-500"></i>
-      <p class="text-sm font-medium" style="color: rgb(55, 65, 81);">Uso de la IA</p>
-     </div>
+     
     </div>
    </div>
   </section>
 
-  <section id="pasos" class="py-24 px-6" style="background: rgb(30, 27, 75);">
+  <!-- Section 4: PASO A PASO -->
+  <section id="paso-a-paso" class="py-24 px-6" style="background-color: #0b004f;">
    <div class="max-w-4xl mx-auto">
-    <h2 class="font-display text-center mb-4" style="color: rgb(255, 255, 255); font-size: 36px;">Paso a Paso</h2>
-    <p class="text-center mb-16 text-base" style="color: rgb(196, 181, 253);">Tu ruta de acción rápida para crear tu recurso educativo.</p>
-    <div class="space-y-8">
-     <div class="flex items-start gap-6">
-      <div class="w-14 h-14 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center text-xl shrink-0 font-semibold">1</div>
-      <div class="section-card rounded-xl p-6 flex-1" style="background: rgba(255, 255, 255, 0.1);">
-       <h4 class="mb-1" style="color: rgb(255, 255, 255); font-size: 16px;">Selecciona la Herramienta</h4>
-       <p class="text-sm" style="color: rgb(196, 181, 253);">Escoge la herramienta ideal según tu tipo de contenido.</p>
+    <h2 class="font-display text-center mb-4 text-white" style="font-size: 40px;">Paso a Paso</h2>
+    <p class="text-center max-w-2xl mx-auto mb-16 text-base text-indigo-200/70">Tu ruta de acción rápida para crear tu recurso educativo.</p>
+    
+    <div class="space-y-4">
+     
+     <a href="#paso-1" class="group flex items-center justify-between p-6 rounded-2xl transition-all duration-300 hover:bg-white/10 hover:translate-x-2" style="background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+      <div class="flex items-center gap-6">
+       <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center font-semibold text-xl shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white" style="color: #0b004f;">1</div>
+       <div>
+        <h3 class="font-normal text-white mb-1" style="font-size: 19px;">Selecciona la Herramienta</h3>
+        <p class="text-sm text-indigo-200/60">Escoge la herramienta ideal según tu tipo de contenido.</p>
+       </div>
       </div>
-     </div>
-     <div class="flex items-start gap-6">
-      <div class="w-14 h-14 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center text-xl shrink-0 font-semibold">2</div>
-      <div class="section-card rounded-xl p-6 flex-1" style="background: rgba(255, 255, 255, 0.1);">
-       <h4 class="mb-1" style="color: rgb(255, 255, 255); font-size: 16px;">Divide tu Contenido</h4>
-       <p class="text-sm" style="color: rgb(196, 181, 253);">Organiza la información en bloques claros y digeribles.</p>
+      <span class="text-2xl text-white/40 group-hover:text-white group-hover:rotate-[135deg] transition-all duration-300 font-light select-none pr-2">+</span>
+     </a>
+     
+     <a href="#paso-2" class="group flex items-center justify-between p-6 rounded-2xl transition-all duration-300 hover:bg-white/10 hover:translate-x-2" style="background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+      <div class="flex items-center gap-6">
+       <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center font-semibold text-xl shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white" style="color: #0b004f;">2</div>
+       <div>
+        <h3 class="font-normal text-white mb-1" style="font-size: 19px;">Divide tu Contenido</h3>
+        <p class="text-sm text-indigo-200/60">Organiza la información en bloques claros y digeribles.</p>
+       </div>
       </div>
-     </div>
-     <div class="flex items-start gap-6">
-      <div class="w-14 h-14 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center text-xl shrink-0 font-semibold">3</div>
-      <div class="section-card rounded-xl p-6 flex-1" style="background: rgba(255, 255, 255, 0.1);">
-       <h4 class="mb-1" style="color: rgb(255, 255, 255); font-size: 16px;">Accede a la Plantilla</h4>
-       <p class="text-sm" style="color: rgb(196, 181, 253);">Descarga y usa la plantilla de diseño guiado.</p>
+      <span class="text-2xl text-white/40 group-hover:text-white group-hover:rotate-[135deg] transition-all duration-300 font-light select-none pr-2">+</span>
+     </a>
+     
+     <a href="#paso-3" class="group flex items-center justify-between p-6 rounded-2xl transition-all duration-300 hover:bg-white/10 hover:translate-x-2" style="background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+      <div class="flex items-center gap-6">
+       <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center font-semibold text-xl shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white" style="color: #0b004f;">3</div>
+       <div>
+        <h3 class="font-normal text-white mb-1" style="font-size: 19px;">Accede a la Plantilla</h3>
+        <p class="text-sm text-indigo-200/60">Descarga y usa la plantilla de diseño guiado.</p>
+       </div>
       </div>
-     </div>
-     <div class="flex items-start gap-6">
-      <div class="w-14 h-14 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center text-xl shrink-0 font-semibold">4</div>
-      <div class="section-card rounded-xl p-6 flex-1" style="background: rgba(255, 255, 255, 0.1);">
-       <h4 class="mb-1" style="color: rgb(255, 255, 255); font-size: 16px;">Diseña tu Recurso</h4>
-       <p class="text-sm" style="color: rgb(196, 181, 253);">Crea, revisa y descarga tu material final.</p>
+      <span class="text-2xl text-white/40 group-hover:text-white group-hover:rotate-[135deg] transition-all duration-300 font-light select-none pr-2">+</span>
+     </a>
+     
+     <a href="#paso-4" class="group flex items-center justify-between p-6 rounded-2xl transition-all duration-300 hover:bg-white/10 hover:translate-x-2" style="background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+      <div class="flex items-center gap-6">
+       <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center font-semibold text-xl shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white" style="color: #0b004f;">4</div>
+       <div>
+        <h3 class="font-normal text-white mb-1" style="font-size: 19px;">Diseña tu Recurso</h3>
+        <p class="text-sm text-indigo-200/60">Crea, revisa y descarga tu material final.</p>
+       </div>
       </div>
-     </div>
+      <span class="text-2xl text-white/40 group-hover:text-white group-hover:rotate-[135deg] transition-all duration-300 font-light select-none pr-2">+</span>
+     </a>
+
     </div>
    </div>
   </section>
 
-  <section id="dudas" class="py-24 px-6">
+  <!-- Section 5: DUDAS COMUNES -->
+  <section id="faq" class="py-24 px-6 transition-all" style="background-color: #e2e0ff;">
+   <div class="max-w-4xl mx-auto">
+    <h2 class="font-display text-center mb-4" style="color: #0b004f; font-size: 40px;">Dudas Comunes</h2>
+    <p class="text-center max-w-2xl mx-auto mb-16 text-base text-slate-600">Respuestas rápidas a las preguntas más frecuentes.</p>
+    
+    <div class="space-y-4 mb-12">
+     
+     <details class="group border border-indigo-100 rounded-2xl bg-white shadow-sm transition-all duration-300">
+      <summary class="flex items-center justify-between p-6 font-medium cursor-pointer list-none select-none" style="color: #0b004f; font-size: 18px;">
+       <span>¿Necesito experiencia previa en diseño?</span>
+       <svg class="w-5 h-5 text-indigo-900/60 transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+       </svg>
+      </summary>
+      <div class="px-6 pb-6 text-sm leading-relaxed border-t border-indigo-50/50 pt-4 text-slate-600">
+       No. Esta guía está pensada para cualquier persona que quiera crear recursos educativos, sin importar su nivel técnico o creativo. Te llevamos paso a paso por todo el proceso.
+      </div>
+     </details>
+     
+     <details class="group border border-indigo-100 rounded-2xl bg-white shadow-sm transition-all duration-300">
+      <summary class="flex items-center justify-between p-6 font-medium cursor-pointer list-none select-none" style="color: #0b004f; font-size: 18px;">
+       <span>¿Qué herramientas necesito?</span>
+       <svg class="w-5 h-5 text-indigo-900/60 transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+       </svg>
+      </summary>
+      <div class="px-6 pb-6 text-sm leading-relaxed border-t border-indigo-50/50 pt-4 text-slate-600">
+       Usamos herramientas gratuitas y accesibles como Canva, Google Slides y otros recursos en línea que te facilitarán la creación de materiales sin necesidad de software costoso.
+      </div>
+     </details>
+     
+     <details class="group border border-indigo-100 rounded-2xl bg-white shadow-sm transition-all duration-300">
+      <summary class="flex items-center justify-between p-6 font-medium cursor-pointer list-none select-none" style="color: #0b004f; font-size: 18px;">
+       <span>¿Cuánto tiempo toma completar el proceso?</span>
+       <svg class="w-5 h-5 text-indigo-900/60 transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+       </svg>
+      </summary>
+      <div class="px-6 pb-6 text-sm leading-relaxed border-t border-indigo-50/50 pt-4 text-slate-600">
+       Depende de la complejidad de tu contenido, pero en promedio puedes tener tu primer recurso listo e implementado en pocas horas siguiendo nuestra metodología estructurada.
+      </div>
+     </details>
+
+    </div>
+
+    <div class="text-center">
+     <a href="#contacto" class="inline-block px-8 py-3 rounded-full font-medium text-white transition-all duration-300 hover:opacity-90 shadow-md hover:shadow-lg transform hover:-translate-y-0.5" style="background-color: #4f46e5;">
+      ¿Tienes otra duda? Contáctanos
+     </a>
+    </div>
+
+   </div>
+  </section>
+
+  <!-- Section 6: AYÚDANOS A MEJORAR -->
+ <section id="feedback" class="py-24 px-6 transition-all" style="background-color: #daf4ff;">
    <div class="max-w-3xl mx-auto">
-    <h2 class="font-display text-center mb-4" style="color: rgb(30, 27, 75); font-size: 36px;">Dudas Comunes</h2>
-    <p class="text-center mb-12 text-base" style="color: rgb(75, 85, 99);">Respuestas rápidas a las preguntas más frecuentes.</p>
-    <div class="space-y-4" id="faq-list">
-     <div class="border border-gray-200 rounded-xl overflow-hidden">
-      <button class="faq-btn w-full text-left px-6 py-4 flex items-center justify-between font-medium" type="button"> 
-        <span style="color: rgb(30, 58, 95); font-size: 16px;">¿Necesito experiencia previa en diseño?</span> 
-        <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i> 
-      </button>
-      <div class="faq-content px-6 pb-4">
-       <p class="text-sm" style="color: rgb(107, 114, 128);">No. Esta guía está pensada para cualquier persona que quiera crear recursos educativos, sin importar su nivel técnico.</p>
-      </div>
+    <h2 class="font-display text-center mb-4" style="color: #0b004f; font-size: 36px;">Ayúdanos a Mejorar</h2>
+    <p class="text-center max-w-2xl mx-auto mb-12 text-base text-slate-600">Tu opinión es fundamental para seguir mejorando esta experiencia educativa.</p>
+    
+    <form class="space-y-6">
+     <div>
+      <textarea id="comentario" rows="5" class="w-full p-6 rounded-2xl bg-white border border-blue-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition-all text-sm resize-none shadow-sm text-center" placeholder="Ej: Me gustaría que agregaran una plantilla descargable para diseñar infografías interactivas en el Módulo 3..."></textarea>
      </div>
-     <div class="border border-gray-200 rounded-xl overflow-hidden">
-      <button class="faq-btn w-full text-left px-6 py-4 flex items-center justify-between font-medium" type="button"> 
-        <span style="color: rgb(30, 58, 95); font-size: 16px;">¿Qué herramientas necesito?</span> 
-        <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i> 
+     
+     <div class="text-center">
+      <button type="submit" class="inline-block px-8 py-3 rounded-full font-medium text-white transition-all duration-300 hover:opacity-95 shadow-md hover:shadow-lg transform hover:-translate-y-0.5" style="background-color: #0ea5e9;">
+       Enviar Comentario
       </button>
-      <div class="faq-content px-6 pb-4">
-       <p class="text-sm" style="color: rgb(107, 114, 128);">Usamos herramientas gratuitas y accesibles como Canva, Google Slides y recursos en línea que te indicaremos.</p>
-      </div>
      </div>
-     <div class="border border-gray-200 rounded-xl overflow-hidden">
-      <button class="faq-btn w-full text-left px-6 py-4 flex items-center justify-between font-medium" type="button"> 
-        <span style="color: rgb(30, 58, 95); font-size: 16px;">¿Cuánto tiempo toma completar el proceso?</span> 
-        <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i> 
-      </button>
-      <div class="faq-content px-6 pb-4">
-       <p class="text-sm" style="color: rgb(107, 114, 128);">Depende de la complejidad de tu contenido, pero en promedio puedes tener tu primer recurso listo en 2-4 horas.</p>
-      </div>
-     </div>
-    </div>
-    <div class="mt-10 text-center">
-      <a href="#feedback" class="inline-block px-6 py-3 rounded-full text-white font-medium" style="background: rgb(59, 130, 246);">¿Tienes otra duda? Contáctanos</a>
-    </div>
-   </div>
-  </section>
-
-  <section id="feedback" class="py-24 px-6" style="background: rgb(239, 246, 255);">
-   <div class="max-w-3xl mx-auto text-center">
-    <h2 class="font-display mb-4" style="color: rgb(30, 27, 75); font-size: 36px;">Ayúdanos a Mejorar</h2>
-    <p class="mb-10 text-base" style="color: rgb(75, 85, 99);">Tu opinión es fundamental para seguir mejorando esta experiencia educativa.</p>
-    <form id="feedback-form" class="space-y-4 text-left">
-      <label class="block font-medium" for="feedback-input" style="color: rgb(55, 65, 81);">Tu comentario o sugerencia</label> 
-      <textarea id="feedback-input" rows="4" class="w-full border border-gray-200 rounded-xl p-4 focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none text-sm" placeholder="Escribe tu comentario aquí..."></textarea> 
-      <button type="submit" class="px-6 py-3 rounded-full text-white font-medium" style="background: rgb(59, 130, 246);">Enviar Comentario</button>
     </form>
-    <p id="feedback-success" class="hidden mt-4 text-green-600 font-medium">¡Gracias por tu comentario!</p>
+
    </div>
   </section>
 
+  <!-- Section 7: TIPS -->
   <section id="tips" class="py-24 px-6">
    <div class="max-w-5xl mx-auto">
-    <h2 class="font-display text-center mb-4" style="color: rgb(30, 27, 75); font-size: 36px;">Tips &amp; Cápsulas de Valor</h2>
-    <p class="text-center mb-12 text-base" style="color: rgb(75, 85, 99);">Microlearning para potenciar tu práctica educativa.</p>
+    <h2 class="font-display text-center mb-4" style="color: #0b004f; font-size: 40px;">Tips &amp; Cápsulas de Valor</h2>
+    <p class="text-center mb-12 text-base text-slate-600">Potencia tus cursos y formaciones con estos principios para enseñar mejor.</p>
     <div class="grid md:grid-cols-3 gap-8">
-     <div class="section-card rounded-2xl p-8" style="background: rgb(255, 255, 255);">
-      <i data-lucide="brain" class="w-10 h-10 mb-4 text-blue-600"></i>
-      <h3 class="mb-2" style="color: rgb(30, 58, 95); font-size: 19px;">Claves del Aprendizaje Adulto</h3>
-      <p class="text-sm" style="color: rgb(107, 114, 128);">Principios de andragogía aplicados al diseño de recursos efectivos para adultos.</p>
+     
+     <div class="section-card rounded-2xl p-8 bg-white border border-slate-100">
+      <i data-lucide="brain" class="w-10 h-10 mb-5 text-blue-600"></i>
+      <p class="font-display font-normal mb-2" style="color: #0b004f; font-size: 19px; font-weight: 400 !important;">Claves del Aprendizaje Adulto</p>
+      <p class="text-sm text-slate-500 leading-relaxed">Principios de andragogía aplicados al diseño de recursos educativos para adultos.</p>
      </div>
-     <div class="section-card rounded-2xl p-8" style="background: rgb(255, 255, 255);">
-      <i data-lucide="lightbulb" class="w-10 h-10 mb-4 text-purple-600"></i>
-      <h3 class="mb-2" style="color: rgb(30, 58, 95); font-size: 19px;">Aprendizaje por Generación</h3>
-      <p class="text-sm" style="color: rgb(107, 114, 128);">Cómo crear experiencias donde el aprendiz construye activamente su conocimiento.</p>
+     
+     <div class="section-card rounded-2xl p-8 bg-white border border-slate-100">
+      <i data-lucide="lightbulb" class="w-10 h-10 mb-5 text-purple-600"></i>
+      <p class="font-display font-normal mb-2" style="color: #0b004f; font-size: 19px; font-weight: 400 !important;">Aprendizaje Por Generación</p>
+      <p class="text-sm text-slate-500 leading-relaxed">Algunos principios para crear experiencias orientadas a las formas de aprender de cada grupo.</p>
      </div>
-     <div class="section-card rounded-2xl p-8" style="background: rgb(255, 255, 255);">
-      <i data-lucide="presentation" class="w-10 h-10 mb-4 text-sky-600"></i>
-      <h3 class="mb-2" style="color: rgb(30, 58, 95); font-size: 19px;">Claves para Enseñar Hoy</h3>
-      <p class="text-sm" style="color: rgb(107, 114, 128);">Estrategias modernas para conectar con tu audiencia en entornos digitales.</p>
+     
+     <div class="section-card rounded-2xl p-8 bg-white border border-slate-100">
+      <i data-lucide="presentation" class="w-10 h-10 mb-5 text-sky-600"></i>
+      <p class="font-display font-normal mb-2" style="color: #0b004f; font-size: 19px; font-weight: 400 !important;">Claves para Enseñar Hoy</p>
+      <p class="text-sm text-slate-500 leading-relaxed">Estrategias modernas para conectar con tu audiencia en formaciones digitales y presenciales.</p>
      </div>
+     
     </div>
    </div>
   </section>
 
-  <footer class="py-8 px-6 text-center" style="background: rgb(30, 27, 75);">
-   <p class="text-sm" style="color: rgb(165, 180, 252);">Hub Educativo Interactivo · Diseñado para transformar tu práctica educativa</p>
+  <!-- Footer -->
+  <footer class="py-10 px-6 text-center" style="background: #0b004f;">
+   <p class="text-sm text-indigo-200/70 tracking-wide">Hub Educativo Interactivo · Diseñado para transformar tu práctica educativa</p>
   </footer>
 
+  <!-- Scripts funcionales -->
   <script>
-        // Inicializar iconos de Lucide
+        // Inicializar iconos de Lucide de forma limpia y transparente
         lucide.createIcons();
-
-        // FAQ accordion
-        document.querySelectorAll('.faq-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const content = btn.nextElementSibling;
-                const icon = btn.querySelector('[data-lucide]');
-                const isOpen = content.classList.contains('open');
-                
-                document.querySelectorAll('.faq-content').forEach(c => c.classList.remove('open'));
-                document.querySelectorAll('.faq-btn svg').forEach(i => i.style.transform = '');
-                
-                if (!isOpen) {
-                    content.classList.add('open');
-                    if(icon) icon.style.transform = 'rotate(180deg)';
-                }
-            });
-        });
-
-        // Feedback form
-        document.getElementById('feedback-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            document.getElementById('feedback-success').classList.remove('hidden');
-            e.target.reset();
-            setTimeout(() => document.getElementById('feedback-success').classList.add('hidden'), 3000);
-        });
   </script>
 </body>
 </html>
